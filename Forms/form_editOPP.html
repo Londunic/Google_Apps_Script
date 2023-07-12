@@ -1,0 +1,780 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <base target="_top">
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <style>
+      body {
+        background: url("https://drive.google.com/uc?export=view&id=12wUhtXSH5UuQH5kzXx5pqJdEOLOiXvm2") no-repeat center center fixed;
+        background-size: cover;
+      }
+      .inputSearch{
+        margin-right: 10px;
+        margin-left: 30px;
+      }
+      .buttonSearch{
+        border: none;
+        padding: 10px;
+        background-color: #BFD732;
+        color: black;
+        border-radius: 20px;
+        margin-left: 30px;
+        margin-right: 30px;
+      }
+      .container{
+        display: flex;
+      }
+      .col{
+        border: 0.5px dashed black;
+        display:flex;
+        align-items: center;
+        justify-content:center;
+      }
+      .col-1{
+        flex-basis: 20%;
+      }
+      .col-2{
+        flex-basis: 40%;
+      }
+      .col-3{
+        flex-basis: 20%;
+      }
+      .col-4{
+        flex-basis: 10%;
+      }
+      .col-4{
+        flex-basis: 10%;
+      }
+      .colBS-1{
+        flex-basis: 33%;
+      }
+      .colBS-2{
+        flex-basis: 34%;
+      }
+      .colBS-3{
+        flex-basis: 33%;
+      }
+      .label-form{
+        font-size: 13px;
+        font-weight: bold;
+        text-align: right;
+      }
+      .label-Search{
+        font-size: 15px;
+        font-weight: bold;
+        text-align: right;
+        width: 150px;
+      }
+      select{
+        width: 100px;
+      }
+      .inputOther{
+        margin-top: 3px;
+        width: 92px;
+      }
+      .input-form{
+        width: 92px;       
+      }
+      .button-form{
+        border: none;
+        padding: 10px;
+        background-color: #BFD732;
+        color: black;
+        border-radius: 20px;        
+      }
+      .textForm{
+        font-size: 13px;
+      }
+      /** 
+      select{
+        width: 200px;
+        margin-left: 10px;
+      }
+      input{
+        width: 192px;
+        margin-left: 10px;       
+      }
+      .inputOther{
+        margin-top: 3px;
+        width: 192px;
+        margin-left: 10px;
+      }
+      */
+      .buttonRight{
+        border: none;
+        padding: 10px;
+        display: block;
+        margin-right: 20px;
+        background-color: #BFD732;
+        color: black;
+        border-radius: 20px;
+      }
+      .buttonLeft{
+        border: none;
+        padding: 10px;
+        display: block;
+        margin-right: 20px;
+        background-color: #BFD732;
+        color: black;
+        border-radius: 20px;
+      }
+      .swal-modal{
+        font-family:Arial;
+        border-radius: 0px;
+      }
+      .swal-title{
+        font-size: 20px;
+      }
+      .swal-text{
+        font-size: 15px;
+      }
+      .swal-button{
+        background-color: #BFD732;
+        border-radius: 20px;
+        color: black;
+      }
+    </style>
+    <script>
+
+      google.script.run.withSuccessHandler(function (opciones){
+        cargarOpciones(opciones,"opBV");}).valuesRango("F2:F");
+      google.script.run.withSuccessHandler(function (opciones){
+        cargarOpciones(opciones,"opPJ");}).valuesRango("G2:G");
+      google.script.run.withSuccessHandler(function (opciones){
+        cargarOpciones(opciones,"opOW");}).valuesRango("B2:B");
+      google.script.run.withSuccessHandler(function (opciones){
+        cargarOpciones(opciones,"opTW");}).valuesRango("C2:C");
+      google.script.run.withSuccessHandler(function (opciones){
+        cargarOpciones(opciones,"opSH");}).valuesRango("L2:L");
+      google.script.run.withSuccessHandler(function (opciones){
+        cargarOpciones(opciones,"opTECH");}).valuesRango("J2:J");
+      google.script.run.withSuccessHandler(function (opciones){
+        cargarOpciones(opciones,"opSTG");}).valuesRango("I2:I");
+      google.script.run.withSuccessHandler(function (opciones){
+        cargarOpcionesFecha(opciones,"opTD");}).valuesFechaRango("O2:O");
+      google.script.run.withSuccessHandler(function (opciones){
+        cargarOpcionesFecha(opciones,"opED");}).valuesFechaRango("P2:P");
+
+      function cargarOpciones(opciones,selectId) {
+        var select = document.getElementById(selectId);
+        var option = document.createElement("option");
+        option.value = "";
+        option.text = "";
+        select.add(option);
+
+        opciones.forEach(function (opcion) {
+          var option = document.createElement("option");
+          option.value = opcion;
+          option.text = opcion;
+          select.add(option);
+        });
+
+        if(selectId != "opSTG"){
+          var option = document.createElement("option");
+          option.value = "otra";
+          option.text = "Other";
+          select.add(option);
+        }
+
+      }
+      function cargarOpcionesFecha(opciones,selectId) {
+        var select = document.getElementById(selectId);
+        var option = document.createElement("option");
+        option.value = "";
+        option.text = "";
+        select.add(option);
+
+        for(var i = 0; i < opciones.length; i++){
+          var option = document.createElement("option");
+          option.value = opciones[i][1];
+          option.text = opciones[i][0];
+          select.add(option);
+        }
+      }
+
+    </script>
+  </head>
+  <body style='margin: 0; padding: 0;'>
+    <br></br>
+    <div style='background-color: #F5F6F7; margin: 0 auto; padding: 30px; max-width: 900px;font-family: Arial;'>
+
+      <!-- Logos -->
+      <div style='background-color: #FFFFFF; margin: 0 auto; padding: 20px; overflow: hidden;'>
+        <img src="https://drive.google.com/uc?export=view&id=1R7kLBfjaIN132U8YQuR3EKKz5eGv7A2I" style="width: 150px; height: auto;float: left;">
+        <img src="https://drive.google.com/uc?export=view&id=1oh-1ZCvpeo8kwz4-Tk5f1M3ymYn2uqKh" style="width: 200px; height: auto;float: right;">
+      </div>
+      <!-- Titulo 1 -->
+      <h2 style='background-color: #444444 ;color: white;'><center>Edit Opportunity</center></h2>
+
+      <!-- Marco blanco de la tabla -->
+      <div style='background-color: #FFFFFF; margin: 0 auto; padding: 30px;'>
+        
+        <!-- Busqueda de la Opp -->
+        <div class="container">
+          <div class="col colBS-1">
+            <label class="label-Search" for="nOpp">Opp Number</label>
+          </div>
+          <div class="col colBS-2">
+            <input class="inputSearch" type="number" id="nOpp" name="nOpp" min="0">
+          </div>
+          <div class="col colBS-3">
+            <button onclick="seach()" class="buttonSearch" id="btnSearch">Seach</button>
+          </div>
+        </div>
+
+        <!-- Formulario -->
+        <div id="datosOpp" name="datosOpp" style="display: none;">
+          <br></br>
+          <!-- Opp number -->
+          <div class="container">
+            <div class="col col-1">
+              <label class="label-form" for="opNum">Opp Number</label>
+            </div>
+            <div class="col col-2">
+              <p class="textForm" id="txNum"></p>
+            </div>
+          </div>     
+          <!-- Business Vertical -->
+          <div class="container">
+            <div class="col col-1">
+              <label class="label-form" for="opBV" id="lbBV">Business Vertical</label>
+            </div>
+            <div class="col col-2">
+              <p class="textForm" id="txBV"></p>
+            </div>
+            <div class="col col-3">
+              <div style="display: grid;">
+                <select id="opBV" onchange="validarOpcion(this,'otherBV')"></select>
+                <input class="inputOther" type="text" id="otherBV" style="display: none;" />
+              </div>
+            </div>
+            <div class="col col-4">
+            </div>
+            <div class="col col-5">
+              <button onclick="editFieldOthers('opBV','otherBV','txNum','lbBV','txBV')" class="button-form" id="editBV">Edit</button>
+            </div>
+          </div>
+          <!-- Project Name -->
+          <div class="container">
+            <div class="col col-1">
+              <label class="label-form" for="opPJ" id="lbPJ">Project name</label>
+            </div>
+            <div class="col col-2">
+              <p class="textForm" id="txPJ"></p>
+            </div>
+            <div class="col col-3">
+              <div style="display: grid;">
+                <select id="opPJ" onchange="validarOpcion(this,'otherPJ')"></select>
+                <input class="inputOther" type="text" id="otherPJ" style="display: none;" />
+              </div>
+            </div>
+            <div class="col col-4">
+            </div>
+            <div class="col col-5">
+              <button onclick="editFieldOthers('opPJ','otherPJ','txNum','lbPJ','txPJ')" class="button-form" id="editPJ">Edit</button>
+            </div>
+          </div>
+          <!-- Operation Owner -->
+          <div class="container">
+            <div class="col col-1">
+              <label class="label-form" for="opOW" id="lbOW">Operation Owner<span style="color: red"> *</span></label>
+            </div>
+            <div class="col col-2">
+              <p class="textForm" id="txOW"></p>
+            </div>
+            <div class="col col-3">
+              <div style="display: grid;">
+                <select id="opOW" onchange="validarOpcion(this,'otherOW')"></select>
+                <input class="inputOther" type="text" id="otherOW" style="display: none;" />
+              </div>
+            </div>
+            <div class="col col-4">
+            </div>
+            <div class="col col-5">
+              <button onclick="editFieldOthers('opOW','otherOW','txNum','lbOW','txOW')" class="button-form" id="editOW">Edit</button>
+            </div>
+          </div>
+          <!-- tech Owner -->
+          <div class="container">
+            <div class="col col-1">
+              <label class="label-form" for="opTW" id="lbTW">Tech Owner</label>
+            </div>
+            <div class="col col-2">
+              <p class="textForm" id="txTW"></p>
+            </div>
+            <div class="col col-3">
+              <div style="display: grid;">
+                <select id="opTW" onchange="validarOpcion(this,'otherTW')"></select>
+                <input class="inputOther" type="text" id="otherTW" style="display: none;" />
+              </div>
+            </div>
+            <div class="col col-4">
+            </div>
+            <div class="col col-5">
+              <button onclick="editFieldOthers('opTW','otherTW','txNum','lbTW','txTW')" class="button-form" id="editTW">Edit</button>
+            </div>
+          </div>
+          <!-- J&J Stakeholder -->
+          <div class="container">
+            <div class="col col-1">
+              <label class="label-form" for="opSH" id="lbSH">J&J Stakeholder</label>
+            </div>
+            <div class="col col-2">
+              <p class="textForm" id="txSH">Prueba</p>
+            </div>
+            <div class="col col-3">
+              <div style="display: grid;">
+                <select id="opSH" onchange="validarOpcion(this,'otherSH')"></select>
+                <input class="inputOther" type="text" id="otherSH" style="display: none;" />
+              </div>
+            </div>
+            <div class="col col-4">
+            </div>
+            <div class="col col-5">
+              <button onclick="editFieldOthers('opSH','otherSH','txNum','lbSH','txSH')" class="button-form" id="editSH">Edit</button>
+            </div>
+          </div>
+          <!-- Technology|Tool|Platform -->
+          <div class="container">
+            <div class="col col-1">
+              <label class="label-form" for="tech" id="lbTH">Technology | Tool | Platform</label>
+            </div>
+            <div class="col col-2">
+              <p class="textForm" id="txTH"></p>
+            </div>
+            <div class="col col-3">
+              <div style="display: grid;">
+                <select id="opTECH" onchange="validarOpcion(this,'otherTECH')"></select>
+                <input class="inputOther" type="text" id="otherTECH" style="display: none;" />
+              </div>
+            </div>
+            <div class="col col-4">
+            </div>
+            <div class="col col-5">
+              <button onclick="editFieldOthers('opTECH','otherTECH','txNum','lbTH','txTH')" class="button-form" id="editTECH">Edit</button>
+            </div>
+          </div>
+          <!-- Opportunity Name -->
+          <div class="container">
+            <div class="col col-1">
+              <label class="label-form" for="name" id="lbNM">Opportunity Name</label>
+            </div>
+            <div class="col col-2">
+              <p class="textForm" id="txNM"></p>
+            </div>
+            <div class="col col-3">
+              <input class="input-form" type="text" id="name" name="name">
+            </div>
+            <div class="col col-4">
+            </div>
+            <div class="col col-5">
+              <button onclick="editFieldText('name','txNum','lbNM','txNM')" class="button-form" id="editName">Edit</button>
+            </div>
+          </div>
+          <!-- Opportunity Description -->
+          <div class="container">
+            <div class="col col-1">
+              <label class="label-form" for="desc" id="lbDS">Opportunity Description</label>
+            </div>
+            <div class="col col-2">
+              <p class="textForm" id="txDS">Prueba</p>
+            </div>
+            <div class="col col-3">
+              <input class="input-form" type="text" id="desc" name="desc">
+            </div>
+            <div class="col col-4">
+            </div>
+            <div class="col col-5">
+              <button onclick="editFieldText('desc','txNum','lbDS','txDS')" class="button-form" id="editDS">Edit</button>
+            </div>
+          </div>
+          <!-- Last Update -->
+          <div class="container">
+            <div class="col col-1">
+              <label class="label-form" for="lUpdate" id="lbLU">Last Updates</label>
+            </div>
+            <div class="col col-2">
+              <p class="textForm" id="txLU"></p>
+            </div>
+            <div class="col col-3">
+              <input class="input-form" type="text" id="lUpdate" name="lUpdate">
+            </div>
+            <div class="col col-4">
+            </div>
+            <div class="col col-5">
+              <button onclick="editFieldText('lUpdate','txNum','lbLU','txLU')" class="button-form" id="editLU">Add</button>
+            </div>
+          </div>
+          <!-- Next Actions -->
+          <div class="container">
+            <div class="col col-1">
+              <label class="label-form" for="act" id="lbAC">Next Actions</label>
+            </div>
+            <div class="col col-2">
+              <p class="textForm" id="txAC"></p>
+            </div>
+            <div class="col col-3">
+              <input class="input-form" type="text" id="act" name="act">
+            </div>
+            <div class="col col-4">
+            </div>
+            <div class="col col-5">
+              <button onclick="editFieldText('act','txNum','lbAC','txAC')" class="button-form" id="editAC">Add</button>
+            </div>
+          </div>
+          <!-- Stage -->
+          <div class="container">
+            <div class="col col-1">
+              <label class="label-form" for="opSTG" id="lbST">Stage<span style="color: red"> *</span></label>
+            </div>
+            <div class="col col-2">
+              <p class="textForm" id="txST"></p>
+            </div>
+            <div class="col col-3">
+              <select id="opSTG"></select>
+            </div>
+            <div class="col col-4">
+            </div>
+            <div class="col col-5">
+              <button onclick="editFieldText('opSTG','txNum','lbST','txST')" class="button-form" id="editST">Edit</button>
+            </div>
+          </div>
+          <!-- Target Date -->
+          <div class="container">
+            <div class="col col-1">
+              <label class="label-form" for="opTD" id="lbTD">Target Date<span style="color: red"> *</span></label>
+            </div>
+            <div class="col col-2">
+              <p class="textForm" id="txTD"></p>
+            </div>
+            <div class="col col-3">
+              <select id="opTD"></select>
+            </div>
+            <div class="col col-4">
+            </div>
+            <div class="col col-5">
+              <button onclick="editFieldText('opTD','txNum','lbTD','txTD')" class="button-form" id="editTD">Edit</button>
+            </div>
+          </div>
+          <!-- Opportunity BornDate -->
+          <div class="container">
+            <div class="col col-1">
+              <label class="label-form" for="bornd" id="lbBD">Opportunity BornDate</label>
+            </div>
+            <div class="col col-2">
+              <p class="textForm" id="txBD"></p>
+            </div>
+            <div class="col col-3">
+              <input class="input-form" type="date" id="bornd" name="bornd">
+            </div>
+            <div class="col col-4">
+            </div>
+            <div class="col col-5">
+              <button onclick="editFieldText('bornd','txNum','lbBD','txBD')" class="button-form" id="editBD">Edit</button>
+            </div>
+          </div>
+          <!-- Openings (# of positions) -->
+          <div class="container">
+            <div class="col col-1">
+              <label class="label-form" for="posit" id="lbOP">Openings (# of positions)</label>
+            </div>
+            <div class="col col-2">
+              <p class="textForm" id="txOP"></p>
+            </div>
+            <div class="col col-3">
+              <input class="input-form" type="number" id="posit" name="posit" min="1">
+            </div>
+            <div class="col col-4">
+            </div>
+            <div class="col col-5">
+              <button onclick="editFieldText('posit','txNum','lbOP','txOP')" class="button-form" id="editOP">Edit</button>
+            </div>
+          </div>
+          <!-- Monthly RunRate -->
+          <div class="container">
+            <div class="col col-1">
+              <label class="label-form" for="rRate" id="lbMR">Monthly RunRate (All)<span style="color: red"> *</span></label>
+            </div>
+            <div class="col col-2">
+              <p class="textForm" id="txMR"></p>
+            </div>
+            <div class="col col-3">
+              <input class="input-form" type="number" id="rRate" name="rRate" min="0">
+            </div>
+            <div class="col col-4">
+            </div>
+            <div class="col col-5">
+              <button onclick="editFieldText('rRate','txNum','lbMR','txMR')" class="button-form" id="editMR">Edit</button>
+            </div>
+          </div>
+          <!-- Opportunity End Date -->
+          <div class="container">
+            <div class="col col-1">
+              <label class="label-form" for="opED" id="lbED">Opportunity End Date<span style="color: red"> *</span></label>
+            </div>
+            <div class="col col-2">
+              <p class="textForm" id="txED">Prueba</p>
+            </div>
+            <div class="col col-3">
+              <select id="opED"></select>
+            </div>
+            <div class="col col-4">
+            </div>
+            <div class="col col-5">
+              <button onclick="editFieldText('opED','txNum','lbED','txED')" class="button-form" id="editED">Edit</button>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+    <br></br>
+    <script>
+      
+      function editFieldOthers(idSelect,idOther,idOppNumber,name,idText){
+        var col = obtenerValue(name);
+        var nOpportunity = obtenerValue(idOppNumber);
+
+        swal({
+          title: "Notification",
+          text: "Are you sure you want to edit the "+col+"?",
+          icon: "warning",
+          buttons: {
+            yes:{
+              text: "Yes",
+              value: "yes"
+            },
+            cancel: "No",
+          },
+        }).then((value) =>{
+          switch(value){
+
+            case "yes":
+
+              var continuar= true;
+              if(idSelect == "opOW"){
+                if(document.getElementById(idSelect).value == ""){
+                  continuar= false;
+                  swal({
+                    title: "Notification",
+                    text: col+" can not be empty",
+                    icon: "warning",
+                  });                 
+                }
+              }
+              if(continuar){
+                var newValue = validarOther(idSelect,idOther);
+                google.script.run.editOpp(newValue,nOpportunity,col);
+                document.getElementById(idOther).style.display = "none";
+                document.getElementById(idSelect).value="";
+                document.getElementById(idText).textContent = newValue;
+
+                swal({
+                  title: "Notification",
+                  text: col+" was edited",
+                  icon: "success",
+                });
+              }
+              break;
+            
+            default:
+              swal({
+              title: "Notification",
+              text: col+" was not edited",
+              icon: "warning",
+              });
+              break;
+          }
+        });
+
+      }
+
+      function editFieldText(idInput,idOppNumber,name,idText){
+        var col = obtenerValue(name);
+        var nOpportunity = obtenerValue(idOppNumber);
+
+        swal({
+          title: "Notification",
+          text: "Are you sure you want to edit the "+col+"?",
+          icon: "warning",
+          buttons: {
+            yes:{
+              text: "Yes",
+              value: "yes"
+            },
+            cancel: "No",
+          },
+        }).then((value) =>{
+          switch(value){
+
+            case "yes":
+
+              var continuar = true;
+              if(idInput=="rRate"){
+                if(document.getElementById(idInput).value == "" || document.getElementById(idInput).value == "0"){
+                  continuar= false;
+                  swal({
+                    title: "Notification",
+                    text: col+" can not be empty or zero",
+                    icon: "warning",
+                  });                 
+                }
+              }
+              else if (idInput=="opSTG" || idInput=="opTD" || idInput=="opED"){
+                if(document.getElementById(idInput).value == ""){
+                  continuar= false;
+                  swal({
+                    title: "Notification",
+                    text: col+" can not be empty",
+                    icon: "warning",
+                  });                 
+                }
+              }
+
+              if(continuar){
+                if(idInput=="lUpdate" || idInput=="act"){
+                  var oldValue = document.getElementById(idText).textContent;
+                  var newValue = oldValue+"\n"+document.getElementById(idInput).value;
+                }
+                else{
+                  var newValue = document.getElementById(idInput).value;
+                }
+                google.script.run.editOpp(newValue,nOpportunity,col);
+                document.getElementById(idInput).value="";
+                if(idInput=="rRate"){
+                  var aux = parseInt(newValue).toLocaleString('en-US', { style: 'currency', currency: 'USD' })
+                  document.getElementById(idText).textContent = aux;
+                }
+                else if(idInput=="bornd"){
+                  if(newValue == ""){
+                    document.getElementById(idText).textContent = newValue;
+                  }
+                  else{
+                    var fecha = new Date(newValue);
+                    fecha.setDate(fecha.getDate() + 1);
+                    var formatoFecha = fecha.toLocaleDateString("en-US", { year: 'numeric', month: 'long' });
+                    document.getElementById(idText).textContent = formatoFecha;
+                  }
+                }
+                else{
+                  document.getElementById(idText).textContent = newValue;
+                }
+                swal({
+                  title: "Notification",
+                  text: col+" was edited",
+                  icon: "success",
+                });
+              }
+              break;
+            
+            default:
+              swal({
+              title: "Notification",
+              text: col+" was not edited",
+              icon: "warning",
+              });
+              break;
+          }
+        });
+
+      }
+
+      // Función para buscar opp
+      function seach(){
+        document.getElementById("datosOpp").style.display = "none";
+        if(document.getElementById("nOpp").value != ""){
+          swal({
+            title: "Loading...",
+            text: " ",
+            timer: 1500, // Tiempo en milisegundos
+            icon: "info",
+            buttons: false,
+          });
+          google.script.run.withSuccessHandler(showResult).infoOpp(document.getElementById("nOpp").value);  
+        }
+        else{
+          swal({
+            title: "Notification",
+            text: "this opportunity was not found",
+            icon: "warning",
+          });
+        }
+      }
+      // Función para imprimir los valores de la opp
+      function showResult(values){
+        if(values.length == 0){
+          swal({
+            title: "Notification",
+            text: "this opportunity was not found",
+            icon: "warning",
+          });
+          document.getElementById("datosOpp").style.display = "none";
+        }
+        else{
+          var cadena = values[0]
+          var arreglo = cadena.split("||");
+          console.log(arreglo);
+          document.getElementById("txNum").textContent = arreglo[0];
+          document.getElementById("txBV").textContent = arreglo[1];
+          document.getElementById("txPJ").textContent = arreglo[2];
+          document.getElementById("txOW").textContent = arreglo[3];
+          document.getElementById("txTW").textContent = arreglo[4];
+          document.getElementById("txSH").textContent = arreglo[5];
+          document.getElementById("txTH").textContent = arreglo[6];
+          document.getElementById("txNM").textContent = arreglo[7];
+          document.getElementById("txDS").textContent = arreglo[8];
+          document.getElementById("txLU").textContent = arreglo[9];
+          document.getElementById("txAC").textContent = arreglo[10];
+          document.getElementById("txST").textContent = arreglo[12];
+          document.getElementById("txTD").textContent = arreglo[13];
+          document.getElementById("txBD").textContent = arreglo[14];
+          document.getElementById("txOP").textContent = arreglo[16];
+          document.getElementById("txMR").textContent = arreglo[17];
+          document.getElementById("txED").textContent = arreglo[18];
+          document.getElementById("datosOpp").style.display = "block";
+        }
+      }
+
+      // Función para habilitar el campo para ingresar el valor other
+      function validarOpcion(selectElement,idInput) {
+        var selectedValue = selectElement.value;
+        if (selectedValue === "otra") {
+          document.getElementById(idInput).style.display = "block";
+        } else {
+          document.getElementById(idInput).style.display = "none";
+        }
+      }
+
+      function obtenerValue(id){
+        var valor = document.getElementById(id).textContent;
+        return valor;
+      }
+      function validarOther(idSelect,idOther){
+        var valor = ""
+        if(document.getElementById(idSelect).value == "otra"){
+          if(document.getElementById(idOther).value == ""){
+            valor = "Other"
+          }
+          else{
+            valor = document.getElementById(idOther).value
+          }
+        }
+        else{
+          valor = document.getElementById(idSelect).value
+        }
+        return valor
+      }
+      function validarIngreso(data){
+        var vacio=false
+        for(var i = 0; i <= data.length; i++){
+          if(data[i]==""){
+            vacio = true
+            break
+          }
+        }
+        return vacio
+      }
+    </script>    
+  </body>
+</html>
